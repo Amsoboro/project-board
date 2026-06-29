@@ -1,4 +1,4 @@
-package com.example.board;
+package com.example.board.domain;
 
 import jakarta.persistence.*;
 
@@ -26,6 +26,11 @@ public class Post {
         this.title = title;
         this.content = content;
         this.author = author;
+    }
+
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
     }
 
     public Long getId() {

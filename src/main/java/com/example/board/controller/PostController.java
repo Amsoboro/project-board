@@ -1,0 +1,72 @@
+package com.example.board.controller;
+
+import com.example.board.domain.Post;
+import com.example.board.dto.PageResponse;
+import com.example.board.dto.PostCreateRequest;
+import com.example.board.dto.PostResponse;
+import com.example.board.dto.PostUpdateRequest;
+import com.example.board.service.PostService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+public class PostController {
+
+    private final PostService postService;
+
+    public PostController(PostService postService) {
+        this.postService = postService;
+    }
+
+    // 게시글 작성 : POST /posts
+    @PostMapping("/posts")
+    public PostResponse post(@RequestBody PostCreateRequest request) {
+        Post post = postService.write(
+                request.getMemberId(),
+                request.getTitle(),
+                request.getContent()
+        );
+        return new PostResponse(post);
+    }
+
+    // 게시글 조회 : GET /posts/{id}
+    @GetMapping("/posts/{id}")
+    public PostResponse findPost(@PathVariable Long id) {
+        Post post = postService.findPost(id);
+        return new PostResponse(post);
+    }
+
+    // 게시글 업데이트 : PUT /posts/{id}
+    @PutMapping("/posts/{id}")
+    public PostResponse update(@PathVariable Long id,
+                               @RequestBody PostUpdateRequest request) {
+        Post post = postService.update(
+                id,
+                request.getTitle(),
+                request.getContent()
+        );
+        return new PostResponse(post);
+    }
+
+    // 게시글 삭제 : DELETE /posts/{id}
+    @DeleteMapping("/posts/{id}")
+    public void delete(@PathVariable Long id) {
+        postService.delete(id);
+    }
+
+    // 게시글 목록 : GET /posts
+    @GetMapping("/posts")
+    public PageResponse<PostResponse> findAll(Pageable pageable) {
+        Page<PostResponse> posts = postService.findAll(pageable)
+                .map(PostResponse::new);
+        return new PageResponse<>(posts);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handle(IllegalArgumentException e) {
+        return e.getMessage();
+    }
+}

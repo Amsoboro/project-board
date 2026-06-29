@@ -1,6 +1,7 @@
-package com.example.board;
+package com.example.board.service;
 
-import jakarta.persistence.EntityNotFoundException;
+import com.example.board.domain.Member;
+import com.example.board.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,11 +1,13 @@
-package com.example.board;
+package com.example.board.dto;
+
+import com.example.board.domain.Post;
 
 public class PostResponse {
 
-    private Long id;
-    private String title;
-    private String content;
-    private String authorNickname; // 닉네임만 노출하게(이메일 X)
+    private final Long id;
+    private final String title;
+    private final String content;
+    private final String authorNickname; // 닉네임만 노출하게(이메일 X)
 
     public PostResponse(Post post) {
         this.id = post.getId();
