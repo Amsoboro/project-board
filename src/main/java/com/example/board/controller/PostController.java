@@ -6,9 +6,9 @@ import com.example.board.dto.PostCreateRequest;
 import com.example.board.dto.PostResponse;
 import com.example.board.dto.PostUpdateRequest;
 import com.example.board.service.PostService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,7 +22,7 @@ public class PostController {
 
     // 게시글 작성 : POST /posts
     @PostMapping("/posts")
-    public PostResponse post(@RequestBody PostCreateRequest request) {
+    public PostResponse post(@Valid @RequestBody PostCreateRequest request) {
         Post post = postService.write(
                 request.getMemberId(),
                 request.getTitle(),
@@ -41,7 +41,7 @@ public class PostController {
     // 게시글 업데이트 : PUT /posts/{id}
     @PutMapping("/posts/{id}")
     public PostResponse update(@PathVariable Long id,
-                               @RequestBody PostUpdateRequest request) {
+                               @Valid @RequestBody PostUpdateRequest request) {
         Post post = postService.update(
                 id,
                 request.getTitle(),
@@ -62,11 +62,5 @@ public class PostController {
         Page<PostResponse> posts = postService.findAll(pageable)
                 .map(PostResponse::new);
         return new PageResponse<>(posts);
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handle(IllegalArgumentException e) {
-        return e.getMessage();
     }
 }

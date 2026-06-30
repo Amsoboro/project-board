@@ -5,7 +5,7 @@ import com.example.board.dto.CommentCreateRequest;
 import com.example.board.dto.CommentResponse;
 import com.example.board.dto.CommentUpdateRequest;
 import com.example.board.service.CommentService;
-import org.springframework.http.HttpStatus;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class CommentController {
     // 댓글 작성 : POST /posts/{postId}
     @PostMapping("/posts/{postId}/comments")
     public CommentResponse write(@PathVariable Long postId,
-                                 @RequestBody CommentCreateRequest request) {
+                                 @Valid @RequestBody CommentCreateRequest request) {
         Comment comment = commentService.write(
                 postId,
                 request.getMemberId(),
@@ -34,7 +34,7 @@ public class CommentController {
     // 댓글 수정 : PUT /comments/{id}
     @PutMapping("/comments/{id}")
     public CommentResponse update(@PathVariable Long id,
-                                  @RequestBody CommentUpdateRequest request) {
+                                  @Valid @RequestBody CommentUpdateRequest request) {
         Comment comment = commentService.update(
                 id,
                 request.getContent()
@@ -55,11 +55,5 @@ public class CommentController {
         return comments.stream()
                 .map(CommentResponse::new)
                 .toList();
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handle(IllegalArgumentException e) {
-        return e.getMessage();
     }
 }

@@ -5,7 +5,7 @@ import com.example.board.dto.MemberCreateRequest;
 import com.example.board.dto.MemberDetailResponse;
 import com.example.board.dto.MemberResponse;
 import com.example.board.service.MemberService;
-import org.springframework.http.HttpStatus;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,7 +19,7 @@ public class MemberController {
 
     // 회원가입 : POST /members
     @PostMapping("/members")
-    public MemberResponse register(@RequestBody MemberCreateRequest request) {
+    public MemberResponse register(@Valid @RequestBody MemberCreateRequest request) {
         Member member = memberService.register(
                 request.getEmail(),
                 request.getNickname()
@@ -32,12 +32,5 @@ public class MemberController {
     public MemberDetailResponse findMember(@PathVariable Long id) {
         Member member = memberService.findMember(id);
         return new MemberDetailResponse(member);
-    }
-
-    // 오류처리
-    @ExceptionHandler(IllegalArgumentException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handle(IllegalArgumentException e) {
-        return e.getMessage();
     }
 }
