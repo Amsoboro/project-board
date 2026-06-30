@@ -1,13 +1,9 @@
-package com.example.board.dto;
+package com.example.board.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public class PostCreateRequest {
-
-    @NotNull
-    private Long memberId;
+public class PostUpdateRequest {
 
     @NotBlank
     @Size(max = 100)
@@ -15,10 +11,6 @@ public class PostCreateRequest {
 
     @NotBlank
     private String content;
-
-    public Long getMemberId() {
-        return memberId;
-    }
 
     public String getTitle() {
         return title;

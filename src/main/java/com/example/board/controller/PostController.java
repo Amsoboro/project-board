@@ -1,10 +1,10 @@
 package com.example.board.controller;
 
 import com.example.board.domain.Post;
-import com.example.board.dto.PageResponse;
-import com.example.board.dto.PostCreateRequest;
-import com.example.board.dto.PostResponse;
-import com.example.board.dto.PostUpdateRequest;
+import com.example.board.dto.response.PageResponse;
+import com.example.board.dto.request.PostCreateRequest;
+import com.example.board.dto.response.PostResponse;
+import com.example.board.dto.request.PostUpdateRequest;
 import com.example.board.service.PostService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;

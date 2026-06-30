@@ -1,9 +1,9 @@
 package com.example.board.controller;
 
 import com.example.board.domain.Comment;
-import com.example.board.dto.CommentCreateRequest;
-import com.example.board.dto.CommentResponse;
-import com.example.board.dto.CommentUpdateRequest;
+import com.example.board.dto.request.CommentCreateRequest;
+import com.example.board.dto.response.CommentResponse;
+import com.example.board.dto.request.CommentUpdateRequest;
 import com.example.board.service.CommentService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;

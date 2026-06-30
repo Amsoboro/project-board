@@ -1,9 +1,9 @@
 package com.example.board.controller;
 
 import com.example.board.domain.Member;
-import com.example.board.dto.MemberCreateRequest;
-import com.example.board.dto.MemberDetailResponse;
-import com.example.board.dto.MemberResponse;
+import com.example.board.dto.request.MemberCreateRequest;
+import com.example.board.dto.response.MemberDetailResponse;
+import com.example.board.dto.response.MemberResponse;
 import com.example.board.service.MemberService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;

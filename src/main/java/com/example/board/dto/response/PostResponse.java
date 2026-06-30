@@ -1,4 +1,4 @@
-package com.example.board.dto;
+package com.example.board.dto.response;
 
 import com.example.board.domain.Post;
 
