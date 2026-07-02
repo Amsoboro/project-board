@@ -15,6 +15,7 @@ import java.util.Map;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(MemberController.class)
@@ -46,5 +47,21 @@ public class MemberControllerTest {
                         .content(objectMapper.writeValueAsString(requestBody)))
                 .andExpect(status().isOk());
 
+    }
+
+    @Test
+    void 회원가입_실패_이메일누락() throws Exception {
+        // given
+        Map<String, String> requestBody = Map.of(
+                "email", "",
+                "nickname", "누락"
+        );
+
+        // when & then
+        mockMvc.perform(post("/members")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(requestBody)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.email").exists());
     }
 }
