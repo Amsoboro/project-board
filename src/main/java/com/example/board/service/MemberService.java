@@ -1,6 +1,7 @@
 package com.example.board.service;
 
 import com.example.board.domain.Member;
+import com.example.board.exception.MemberNotFoundException;
 import com.example.board.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,6 @@ public class MemberService {
     }
 
     public Member findMember(Long id) {
-        return memberRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다 : " + id));
+        return memberRepository.findById(id).orElseThrow(() -> new MemberNotFoundException(id));
     }
 }
