@@ -3,6 +3,8 @@ package com.example.board.service;
 import com.example.board.domain.Comment;
 import com.example.board.domain.Member;
 import com.example.board.domain.Post;
+import com.example.board.exception.CommentNotFoundException;
+import com.example.board.exception.PostNotFoundException;
 import com.example.board.repository.CommentRepository;
 import com.example.board.repository.MemberRepository;
 import com.example.board.repository.PostRepository;
@@ -27,7 +29,7 @@ public class CommentService {
     @Transactional
     public Comment write(Long postId, Long memberId, String content) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다 : " + postId));
+                .orElseThrow(() -> new PostNotFoundException(postId));
         Member author = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다. : " + memberId));
         Comment comment = new Comment(content, post, author);
@@ -49,7 +51,7 @@ public class CommentService {
 
     public Comment findComment(Long id) {
         return commentRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 댓글입니다. : " + id));
+                .orElseThrow(() -> new CommentNotFoundException(id));
     }
 
     public List<Comment> findByPost(Long postId) {

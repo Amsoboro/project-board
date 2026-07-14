@@ -3,6 +3,7 @@ package com.example.board.service;
 
 import com.example.board.domain.Member;
 import com.example.board.domain.Post;
+import com.example.board.exception.PostNotFoundException;
 import com.example.board.repository.MemberRepository;
 import com.example.board.repository.PostRepository;
 import org.springframework.data.domain.Page;
@@ -44,7 +45,7 @@ public class PostService {
 
     public Post findPost(Long id) {
         return postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다 : " + id));
+                .orElseThrow(() -> new PostNotFoundException(id));
     }
 
     public Page<Post> findAll(Pageable pageable) {

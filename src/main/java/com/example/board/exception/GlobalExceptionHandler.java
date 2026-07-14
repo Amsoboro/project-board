@@ -27,4 +27,22 @@ public class GlobalExceptionHandler {
         );
         return errors;
     }
+
+    @ExceptionHandler(MemberNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleMemberNotFound(MemberNotFoundException e) {
+        return e.getMessage();
+    }
+
+    @ExceptionHandler(PostNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handlePostNotFound(PostNotFoundException e) {
+        return e.getMessage();
+    }
+
+    @ExceptionHandler(MemberNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleCommentNotFound(CommentNotFoundException e) {
+        return e.getMessage();
+    }
 }
