@@ -40,7 +40,7 @@ public class GlobalExceptionHandler {
         return e.getMessage();
     }
 
-    @ExceptionHandler(MemberNotFoundException.class)
+    @ExceptionHandler(CommentNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String handleCommentNotFound(CommentNotFoundException e) {
         return e.getMessage();
