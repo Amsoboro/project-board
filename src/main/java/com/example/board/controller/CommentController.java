@@ -6,6 +6,8 @@ import com.example.board.dto.response.CommentResponse;
 import com.example.board.dto.request.CommentUpdateRequest;
 import com.example.board.service.CommentService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,14 +23,14 @@ public class CommentController {
 
     // 댓글 작성 : POST /posts/{postId}
     @PostMapping("/posts/{postId}/comments")
-    public CommentResponse write(@PathVariable Long postId,
+    public ResponseEntity<CommentResponse> write(@PathVariable Long postId,
                                  @Valid @RequestBody CommentCreateRequest request) {
         Comment comment = commentService.write(
                 postId,
                 request.getMemberId(),
                 request.getContent()
         );
-        return new CommentResponse(comment);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new CommentResponse(comment));
     }
 
     // 댓글 수정 : PUT /comments/{id}
@@ -44,8 +46,9 @@ public class CommentController {
 
     // 댓글 삭제 : DELETE /comments/{id}
     @DeleteMapping("/comments/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         commentService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
     // 댓글 목록 : GET /posts/{postId}/comments

@@ -9,6 +9,8 @@ import com.example.board.service.PostService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,13 +24,13 @@ public class PostController {
 
     // 게시글 작성 : POST /posts
     @PostMapping("/posts")
-    public PostResponse post(@Valid @RequestBody PostCreateRequest request) {
+    public ResponseEntity<PostResponse> post(@Valid @RequestBody PostCreateRequest request) {
         Post post = postService.write(
                 request.getMemberId(),
                 request.getTitle(),
                 request.getContent()
         );
-        return new PostResponse(post);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new PostResponse(post));
     }
 
     // 게시글 조회 : GET /posts/{id}
@@ -52,8 +54,9 @@ public class PostController {
 
     // 게시글 삭제 : DELETE /posts/{id}
     @DeleteMapping("/posts/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         postService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
     // 게시글 목록 : GET /posts

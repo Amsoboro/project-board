@@ -45,7 +45,7 @@ public class MemberControllerTest {
         mockMvc.perform(post("/members")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(requestBody)))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
 
     }
 

@@ -6,6 +6,8 @@ import com.example.board.dto.response.MemberDetailResponse;
 import com.example.board.dto.response.MemberResponse;
 import com.example.board.service.MemberService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,12 +21,12 @@ public class MemberController {
 
     // 회원가입 : POST /members
     @PostMapping("/members")
-    public MemberResponse register(@Valid @RequestBody MemberCreateRequest request) {
+    public ResponseEntity<MemberResponse> register(@Valid @RequestBody MemberCreateRequest request) {
         Member member = memberService.register(
                 request.getEmail(),
                 request.getNickname()
         );
-        return new MemberResponse(member);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new MemberResponse(member));
     }
 
     // 회원조회 : GET /members/{id}
